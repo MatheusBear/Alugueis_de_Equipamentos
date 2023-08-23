@@ -1,8 +1,9 @@
-# Nome do Projeto
-Controle de Aluguéis de Equipamentos
+# Controle de Aluguéis de Equipamentos
 
-# Descrição
+## Descrição
 
-# Participantes do Projeto
-
+## Participantes
+- Ryann Victor De Almeida Parreira
+- Matheus Augusto Avelar de Souza
+- Miguel Magalhães Freire de Castro
 - João Paulo de Sales Pimenta
