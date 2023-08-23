@@ -9,8 +9,7 @@
 
 - `Funcionalidade 1` `Registrar novos Alugueis`: Registra novos aluguéis, incluindo todas as informações necessárias.
 - `Funcionalidade 2` `Calcular valor do Aluguel`: Calcula e mostra o valor total do aluguel para cada registro.
-- `Funcionalidade 3` `Registros de Alugueis`: Armazena um registro dos aluguéis passados, incluindo informações sobre o cliente, equipamento e as
-datas de início e término.
+- `Funcionalidade 3` `Registros de Alugueis`: Armazena um registro dos aluguéis passados, incluindo as informações registradas.
 - `Funcionalidade 4` `Consulta de Alugueis`: Permite a consulta rápida dos aluguéis atuais e passados de um cliente específico.
 - `Funcionalidade 5` `Relatório Mensal`: Fornece um relatório mensal que lista todos os aluguéis do mês, incluindo o faturamento total.
 
