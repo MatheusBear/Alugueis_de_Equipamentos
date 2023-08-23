@@ -5,7 +5,7 @@
 
 - Este é um projeto de sistema de gerenciamento de aluguéis de equipamentos para construção civil desenvolvido em Java.
 
-# :hammer: Funcionalidades do projeto
+## :hammer: Funcionalidades do projeto
 
 - `Funcionalidade 1` `Registrar novos Alugueis`: Registra novos aluguéis, incluindo todas as informações necessárias.
 - `Funcionalidade 2` `Calcular valor do Aluguel`: Calcula e mostra o valor total do aluguel para cada registro.
