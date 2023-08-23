@@ -3,7 +3,7 @@
 
 ## Descrição
 
-- Este é um projeto de sistema de gerenciamento de aluguéis de equipamentos para construção civil desenvolvido em Java.
+- Este é um projeto de sistema de gerenciamento de aluguéis de equipamentos.
 
 ## :hammer: Funcionalidades do projeto
 
