@@ -3,7 +3,7 @@
 
 ## Descrição
 
-- Este é um projeto de sistema de gerenciamento de aluguéis de equipamentos.
+- Este é um projeto de sistema de gerenciamento de aluguéis de equipamentos, .
 
 ## :hammer: Funcionalidades do projeto
 
