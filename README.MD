@@ -6,7 +6,8 @@
 
 
 ## Participantes
-- [Ryann Victor De Almeida Parreira]()
+- [Ryann Victor De Almeida Parreira](https://github.com/ryannalmeida)
 - [Matheus Augusto Avelar de Souza](https://github.com/MatheusBear)
 - [Miguel Magalhães Freire de Castro](https://github.com/MiguelMagCastro)
 - [João Paulo de Sales Pimenta]()
+- [Cristiano Nues Pires Junior](https://github.com/CristianoJunior0)
