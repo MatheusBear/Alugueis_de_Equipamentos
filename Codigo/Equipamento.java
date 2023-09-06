@@ -3,60 +3,53 @@ public class Equipamento{
     private String descricao;
     private String tipo;
     private Double valor;
-    private int quantidade;
+  private Equipamento(){}
+  public Equipamento(int id, String descricao, String tipo, double valor){
+    this.id = id;
+    this.descricao = descricao;
+    this.tipo = tipo;
+    this.valor = valor;
+  }
 
-    //Setters 
-    public void setID(int ID){
-        this.id = ID;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setDescricao(String Descricao){
-        this.descricao = Descricao;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setTipo(String Tipo){
-        this.tipo = Tipo;
-    }
+  public String getDescricao() {
+    return descricao;
+  }
 
-    public void setValor(Double Valor){
-        this.valor = Valor;
-    }
+  public void setDescricao(String descricao) {
+    this.descricao = descricao;
+  }
 
-    public void setQuantidade(int Quantidade){
-        this.quantidade = Quantidade;
-    }
+  public String getTipo() {
+    return tipo;
+  }
 
-    //Getters
-    public int getID(){
-        return this.id;
-    }
+  public void setTipo(String tipo) {
+    this.tipo = tipo;
+  }
 
-    public String getDescricao(){
-        return this.descricao;
-    }
+  public Double getValor() {
+    return valor;
+  }
 
-    public String getTipo(){
-        return this.tipo;
-    }
+  public void setValor(Double valor) {
+    this.valor = valor;
+  }
 
-    public Double getValor(){
-        return this.valor;
-    }
-
-    public int getQuantidade(){
-        return this.quantidade;
-    }
-
-    //Construtor
-    public Equipamento(){
-
-    }
-
-    public Equipamento(int ID, String Descricao, String Tipo, double Valor, int Quantidade){
-        this.id = ID;
-        this.descricao = Descricao;
-        this.tipo = Tipo;
-        this.valor = Valor;
-        this.quantidade = Quantidade;
-    }
+  @Override
+  public String toString() {
+    return "Equipamento{" +
+           "id=" + id +
+           ", descricao='" + descricao + '\'' +
+           ", tipo='" + tipo + '\'' +
+           ", valor=" + valor +
+           '}';
+  }
 }

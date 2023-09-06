@@ -1,102 +1,91 @@
+import java.time.LocalDate;
 import java.util.*;
 
-public class Controlador{
-    public static void main(String[] args){
-        int idCliente = 0;
-        int idEquipamento = 0;
+public class Controlador {
+  private static final List<Cliente> clientes = new ArrayList<>();
+  private static final List<Equipamento> equipamentos = new ArrayList<>();
 
-        System.out.println("Digite o Nome do Cliente");
-        Scanner scanner = new Scanner(System.in);
+  private static Cliente cadastraCliente(Scanner scanner) {
+    System.out.println("Digite o Nome do Cliente");
 
-        String NomeCliente = scanner.nextLine();
+    String nomeCliente = scanner.nextLine();
+    Cliente cliente = new Cliente(clientes.size(), nomeCliente);
+    clientes.add(cliente);
 
-        Cliente cliente = new Cliente(idCliente, NomeCliente);
-        idCliente++;
+    System.out.println("Registrado como cliente: " + cliente.getNome());
+    return cliente;
+  }
 
-        System.out.println("Registrado como cliente: " + cliente.getNome());
+  private static void cadastraEquipamento(Scanner scanner) {
+    System.out.println("Digite uma descricao do equipamento: ");
+    String descricao = scanner.nextLine();
 
-        boolean Continuar = true;
+    System.out.println("Digite o Tipo do Equipamento: ");
+    String tipo = scanner.nextLine();
 
-        List<Equipamento> Equipments = new ArrayList<Equipamento>();
+    System.out.println("Digite o Valor diario do Equipamento: ");
+    double valor = scanner.nextInt();
 
-        while(Continuar == true){
-            System.out.println("Digite uma descricao do equipamento: ");
-            String Descricao = scanner.nextLine();
+    Equipamento equipamento = new Equipamento(equipamentos.size(), descricao, tipo, valor);
 
-            System.out.println("Digite o Tipo do Equipamento: ");
-            String Tipo = scanner.nextLine();
+    equipamentos.add(equipamento);
+  }
 
-            System.out.println("Digite o Valor diario do Equipamento: ");
-            double Valor = scanner.nextInt();
+  private static Equipamento validaEquipamento(Scanner scanner) {
+    System.out.println("Digite o id do objeto desejado:");
+    int idEquipamento = scanner.nextInt();
 
-            System.out.println("Digite a Quantidade do Equipamento: ");
-            int Quantidade = scanner.nextInt();  
-
-            Equipamento equipamento = new Equipamento(idEquipamento, Descricao, Tipo, Valor, Quantidade);
-
-            Equipments.add(equipamento);
-
-            idEquipamento++;
-            
-            System.out.println("Deseja registrar mais um equipamento? (S ou N)");
-            String desejo = scanner.nextLine();
-            desejo = scanner.nextLine();
-
-            if(desejo.contains("N") || desejo.contains("n")) Continuar = false;
-        }
-
-        System.out.println("Equipamentos disponiveis: ");
-
-        for(int i = 0; i < Equipments.size(); i++){
-            System.out.println("Descricao: " + (Equipments.get(i)).getDescricao() + " Tipo: " + (Equipments.get(i)).getTipo() + " Quntidade: " + (Equipments.get(i)).getQuantidade() + " Valor: " + (Equipments.get(i)).getValor());
-        }
-
-        String equipsDesejados = " "; 
-
-        while(equipsDesejados != ""){
-            System.out.println("Digite a descricao do objeto desejado");
-            equipsDesejados = scanner.nextLine();
-
-            int IDEquipamento = 0;
-
-            //Verificar se equipamento existe
-            boolean exists = false;
-
-            while(exists = false){
-                for(int i = 0; i < Equipments.size(); i++){
-                    if(((Equipments.get(i)).getDescricao()) == equipsDesejados){
-                        IDEquipamento = (Equipments.get(i)).getID();
-                        exists = true; 
-                        break;
-                    }
-                }
-                System.out.println("ERRO! Digite a descricao do objeto desejado novamente");
-                equipsDesejados = scanner.nextLine();
-
-            }
-
-            System.out.println("Digite a Quantidade do Equipamento desejado: ");
-            int Quantidade = scanner.nextInt(); 
-            scanner.nextLine();
-
-            //Verificar se a Quantidade desejado é valida
-            boolean Quant = true;
-
-            if(Quantidade > (Equipments.get(IDEquipamento).getID())) {
-                Quant = false;
-            }
-
-            while(Quant == false){
-                System.out.println("Digite um numero valido para a Quantidade do Equipamento desejado: ");
-                Quantidade = scanner.nextInt(); 
-                scanner.nextLine();
-            }
-
-
-
-            System.out.println("Deseja adicionar mais um Equipamento? (Deixe vazio, caso queira sair, e aperte enter)");
-            equipsDesejados = scanner.nextLine();
-        }
-        
+    while (idEquipamento < 0 || idEquipamento > equipamentos.size()) {
+      System.out.println("ERRO! Digite o id do objeto desejado novamente");
+      idEquipamento = scanner.nextInt();
     }
+    return equipamentos.get(idEquipamento);
+  }
+
+  private static Contrato cadastraContrato(Scanner scanner, Cliente cliente) {
+    Equipamento equipamento = validaEquipamento(scanner);
+    System.out.println("Digite um numero para a quantidade do equipamento desejado: ");
+    int quantidade = scanner.nextInt();
+    System.out.println("Digite o numero de dias para o contrato: ");
+    int numeroDias = scanner.nextInt();
+    return new Contrato(cliente, equipamento, quantidade, LocalDate.now().plusDays(numeroDias));
+  }
+
+  private static boolean continuar(Scanner scanner) {
+    System.out.println("Deseja registrar mais um equipamento? (S ou N)");
+    String desejo = scanner.nextLine();
+    desejo = scanner.nextLine();
+    return !desejo.contains("N") && !desejo.contains("n");
+  }
+
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+
+    Cliente cliente = cadastraCliente(scanner);
+    boolean continuar = true;
+
+    while (continuar) {
+      cadastraEquipamento(scanner);
+
+      continuar = continuar(scanner);
+    }
+
+    System.out.println("Equipamentos disponiveis: ");
+
+    for (Equipamento equipamento : equipamentos) {
+      System.out.println(
+          "id:"
+              + equipamento.getId()
+              + "Descricao: "
+              + equipamento.getDescricao()
+              + " Tipo: "
+              + equipamento.getTipo()
+              + " Valor: "
+              + equipamento.getValor());
+    }
+
+    Contrato contrato = cadastraContrato(scanner, cliente);
+    System.out.println("Contrato criado com sucesso: " + contrato);
+    scanner.close();
+  }
 }

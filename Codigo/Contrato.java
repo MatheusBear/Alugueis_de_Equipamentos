@@ -1,59 +1,94 @@
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-public class Contrato{
-    private int id;
-    private Cliente cliente = new Cliente();
-    private Equipamento equipamento = new Equipamento();
-    private LocalDateTime dataInicio = LocalDateTime.now();
-    private LocalDateTime dataFim;
-    private double valorTotal;
+public class Contrato {
+  private int id;
+  private Cliente cliente;
+  private Equipamento equipamento;
+  private LocalDate dataInicio = LocalDate.now();
+  private LocalDate dataFim;
+  private double valorTotal;
+  private int quantidade;
 
-    int idItems = 0;
+  public Contrato(Cliente cliente, Equipamento equipamento, int quantidade, LocalDate dataFim) {
+    this.cliente = cliente;
+    this.equipamento = equipamento;
+    this.quantidade = quantidade;
+    this.dataFim = dataFim;
+    this.valorTotal = this.geraValorTotal();
+  }
 
-    //Setters
+  private double geraValorTotal() {
+    return this.equipamento.getValor()
+        * this.quantidade
+        * this.dataFim.until(this.dataInicio).getDays();
+  }
 
-    public void setId(int ID){
-        this.id = ID;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setCliente(Cliente Cliente){
-        this.cliente = Cliente;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setEquipamento(Equipamento Equipamento){
-        this.equipamento = Equipamento;
-    }
+  public Cliente getCliente() {
+    return cliente;
+  }
 
-    public void setDataFim(LocalDateTime DataFim){
-        this.dataFim = DataFim;
-    }
+  public void setCliente(Cliente cliente) {
+    this.cliente = cliente;
+  }
 
-    public void setValorTotal(int ValorTotal){
-        this.valorTotal = ValorTotal;
-    }
+  public Equipamento getEquipamento() {
+    return equipamento;
+  }
 
-    //Getters
-    public int getID(){
-        return this.id;
-    }
+  public void setEquipamento(Equipamento equipamento) {
+    this.equipamento = equipamento;
+  }
 
-    public Cliente getCliente(){
-        return this.cliente;
-    }
+  public LocalDate getDataInicio() {
+    return dataInicio;
+  }
 
-    public Equipamento getEquipamento(){
-        return this.equipamento;
-    }
+  public void setDataInicio(LocalDate dataInicio) {
+    this.dataInicio = dataInicio;
+  }
 
-    public LocalDateTime getDataInicio(){
-        return this.dataInicio;
-    }
+  public LocalDate getDataFim() {
+    return dataFim;
+  }
 
-    public LocalDateTime getDataFim(){
-        return this.dataFim;
-    }
+  public void setDataFim(LocalDate dataFim) {
+    this.dataFim = dataFim;
+  }
 
-    public double getValorTotal(){
-        return this.valorTotal;
-    }
+  public double getValorTotal() {
+    return valorTotal;
+  }
+
+  public void setValorTotal(double valorTotal) {
+    this.valorTotal = valorTotal;
+  }
+
+  public int getQuantidade() {
+    return quantidade;
+  }
+
+  public void setQuantidade(int quantidade) {
+    this.quantidade = quantidade;
+  }
+
+  @Override
+  public String toString() {
+    return "Contrato{" +
+           "id=" + id +
+           ", cliente=" + cliente +
+           ", equipamento=" + equipamento +
+           ", dataInicio=" + dataInicio +
+           ", dataFim=" + dataFim +
+           ", valorTotal=" + valorTotal +
+           ", quantidade=" + quantidade +
+           '}';
+  }
 }
