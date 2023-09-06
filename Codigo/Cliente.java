@@ -1,34 +1,42 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Cliente{
     private int id;
     private String nome;
+    private List<Contrato> contratos = new ArrayList<>();
+  public Cliente(int id, String nome){
+    this.id = id;
+    this.nome = nome;
+  }
+  public int getId() {
+    return id;
+  }
 
-    //Setters
-    public void setID(int ID){
-        this.id = ID;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setNome(String Nome){
-        this.nome = Nome;
-    }
+  public String getNome() {
+    return nome;
+  }
 
-    //Getters
-    public int getID(){
-        return this.id;
-    }
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 
-    public String getNome(){
-        return this.nome;
-    }
+  public List<Contrato> getContratos() {
+    return contratos;
+  }
 
-    //Construtor
-    public Cliente(int ID, String Nome){
-        this.id = ID;
-        this.nome = Nome;
-    }
+  public void setContratos(List<Contrato> contratos) {
+    this.contratos = contratos;
+  }
 
-    public Cliente(){
-
-    }
+  @Override
+  public String toString() {
+    return "Cliente{" +
+           "id=" + id +
+           ", nome='" + nome + '\'';
+  }
 }

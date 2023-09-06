@@ -3,60 +3,65 @@ public class Equipamento{
     private String descricao;
     private String tipo;
     private Double valor;
-    private int quantidade;
+    private int quantidadeDisponivel;
 
-    //Setters 
-    public void setID(int ID){
-        this.id = ID;
-    }
+  private Equipamento(){}
 
-    public void setDescricao(String Descricao){
-        this.descricao = Descricao;
-    }
+  public Equipamento(int id, String descricao, String tipo, Double valor, int quantidadeDisponivel) {
+    this.id = id;
+    this.descricao = descricao;
+    this.tipo = tipo;
+    this.valor = valor;
+    this.quantidadeDisponivel = quantidadeDisponivel;
+  }
 
-    public void setTipo(String Tipo){
-        this.tipo = Tipo;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setValor(Double Valor){
-        this.valor = Valor;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setQuantidade(int Quantidade){
-        this.quantidade = Quantidade;
-    }
+  public String getDescricao() {
+    return descricao;
+  }
 
-    //Getters
-    public int getID(){
-        return this.id;
-    }
+  public void setDescricao(String descricao) {
+    this.descricao = descricao;
+  }
 
-    public String getDescricao(){
-        return this.descricao;
-    }
+  public String getTipo() {
+    return tipo;
+  }
 
-    public String getTipo(){
-        return this.tipo;
-    }
+  public void setTipo(String tipo) {
+    this.tipo = tipo;
+  }
 
-    public Double getValor(){
-        return this.valor;
-    }
+  public Double getValor() {
+    return valor;
+  }
 
-    public int getQuantidade(){
-        return this.quantidade;
-    }
+  public void setValor(Double valor) {
+    this.valor = valor;
+  }
 
-    //Construtor
-    public Equipamento(){
+  public int getQuantidadeDisponivel() {
+    return quantidadeDisponivel;
+  }
 
-    }
+  public void setQuantidadeDisponivel(int quantidadeDisponivel) {
+    this.quantidadeDisponivel = quantidadeDisponivel;
+  }
 
-    public Equipamento(int ID, String Descricao, String Tipo, double Valor, int Quantidade){
-        this.id = ID;
-        this.descricao = Descricao;
-        this.tipo = Tipo;
-        this.valor = Valor;
-        this.quantidade = Quantidade;
-    }
+  @Override
+  public String toString() {
+    return "Equipamento{" +
+           "id=" + id +
+           ", descricao='" + descricao + '\'' +
+           ", tipo='" + tipo + '\'' +
+           ", valor=" + valor +
+           '}';
+  }
 }
