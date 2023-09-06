@@ -1,5 +1,7 @@
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Controlador {
   private static final List<Cliente> clientes = new ArrayList<>();
@@ -24,9 +26,12 @@ public class Controlador {
     String tipo = scanner.nextLine();
 
     System.out.println("Digite o Valor diario do Equipamento: ");
-    double valor = scanner.nextInt();
+    double valor = scanner.nextDouble();
 
-    Equipamento equipamento = new Equipamento(equipamentos.size(), descricao, tipo, valor);
+    System.out.println("Digite a quantidade do Equipamento disponivel: ");
+    int quantidade = scanner.nextInt();
+
+    Equipamento equipamento = new Equipamento(equipamentos.size(), descricao, tipo, valor, quantidade);
 
     equipamentos.add(equipamento);
   }
@@ -44,8 +49,12 @@ public class Controlador {
 
   private static Contrato cadastraContrato(Scanner scanner, Cliente cliente) {
     Equipamento equipamento = validaEquipamento(scanner);
-    System.out.println("Digite um numero para a quantidade do equipamento desejado: ");
+    System.out.println("Digite um numero para a quantidade do equipamento desejado, quantidade disponível:  " + equipamento.getQuantidadeDisponivel());
     int quantidade = scanner.nextInt();
+    while (quantidade < 0 || quantidade > equipamento.getQuantidadeDisponivel()) {
+      System.out.println("Numero de quantidade invalidao, digite novamente: ");
+      quantidade = scanner.nextInt();
+    }
     System.out.println("Digite o numero de dias para o contrato: ");
     int numeroDias = scanner.nextInt();
     return new Contrato(cliente, equipamento, quantidade, LocalDate.now().plusDays(numeroDias));
@@ -62,19 +71,16 @@ public class Controlador {
     Scanner scanner = new Scanner(System.in);
 
     Cliente cliente = cadastraCliente(scanner);
-    boolean continuar = true;
 
-    while (continuar) {
+    while (continuar(scanner)) {
       cadastraEquipamento(scanner);
-
-      continuar = continuar(scanner);
     }
 
     System.out.println("Equipamentos disponiveis: ");
 
     for (Equipamento equipamento : equipamentos) {
       System.out.println(
-          "id:"
+              "id:"
               + equipamento.getId()
               + "Descricao: "
               + equipamento.getDescricao()

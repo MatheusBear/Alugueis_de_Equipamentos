@@ -3,12 +3,16 @@ public class Equipamento{
     private String descricao;
     private String tipo;
     private Double valor;
+    private int quantidadeDisponivel;
+
   private Equipamento(){}
-  public Equipamento(int id, String descricao, String tipo, double valor){
+
+  public Equipamento(int id, String descricao, String tipo, Double valor, int quantidadeDisponivel) {
     this.id = id;
     this.descricao = descricao;
     this.tipo = tipo;
     this.valor = valor;
+    this.quantidadeDisponivel = quantidadeDisponivel;
   }
 
   public int getId() {
@@ -41,6 +45,14 @@ public class Equipamento{
 
   public void setValor(Double valor) {
     this.valor = valor;
+  }
+
+  public int getQuantidadeDisponivel() {
+    return quantidadeDisponivel;
+  }
+
+  public void setQuantidadeDisponivel(int quantidadeDisponivel) {
+    this.quantidadeDisponivel = quantidadeDisponivel;
   }
 
   @Override
