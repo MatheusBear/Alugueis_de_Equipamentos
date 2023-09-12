@@ -4,7 +4,7 @@ public class Equipamento {
 	private String tipo;
 	private Double valor;
 	private int quantidadeDisponivel;
-
+	
 	public Equipamento(int id, String descricao, String tipo, Double valor, int quantidadeDisponivel) {
 		this.id = id;
 		this.descricao = descricao;
@@ -32,18 +32,24 @@ public class Equipamento {
 	public int getQuantidadeDisponivel() {
 		return quantidadeDisponivel;
 	}
-
+	
+	public void setQuantidadeDisponivel(int alugados) {
+		this.quantidadeDisponivel -= alugados;
+	}
+	
 
 	@Override
 	public String toString() {
+		
 		return "\nEquipamento:" 
-				+ "\nid=" 
+				+ "\nid: " 
 				+ id 
-				+ "\ndescricao: " 
+				+ "\nDescricao: " 
 				+ descricao
-				+ "\ntipo: " 
+				+ "\nTipo: " 
 				+ tipo 
-				+ "\nvalor: R$"
-				+ valor;
+				+ "\nValor: R$"
+				+ String.format("2.%f", valor)
+				+ "\n";
 	}
 }
