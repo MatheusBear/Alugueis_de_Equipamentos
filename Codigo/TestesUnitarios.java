@@ -13,7 +13,7 @@ class TestesUnitarios {
 	public void defineValoresIniciais() {
 		cliente = new Cliente(1, "Miguel");
 		equipamento = new Equipamento(1, "Martelo", "Ferramentas", 10.0, 10);
-		contrato = new Contrato(cliente, equipamento, 2, LocalDate.now().plusDays(7));
+		contrato = new Contrato(1,cliente, equipamento, 2, LocalDate.now().plusDays(7));
 	}
 
 	@Test
@@ -33,6 +33,7 @@ class TestesUnitarios {
 
 	@Test
 	public void verificaCriacaoDoContrato() {
+		assertEquals(1,contrato.getId());
 		assertEquals(cliente, contrato.getCliente());
 		assertEquals(equipamento, contrato.getEquipamento());
 		assertEquals(2, contrato.getQuantidade());
@@ -61,4 +62,3 @@ class TestesUnitarios {
 	}
 
 }
-
