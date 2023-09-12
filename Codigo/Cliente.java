@@ -22,12 +22,11 @@ public class Cliente {
 	public String getNome() {
 		return nome;
 	}
-
+	
 
 	@Override
 	public String toString() {
-		return "Cliente{" + "id=" + id + ", nome='" + nome + '\'';
+		return "\nCliente: " + "( Id: " + id + ", Nome: " + nome + " )\n";
 	}
-
-
+	
 }
