@@ -9,7 +9,8 @@ public class Contrato {
 	private double valorTotal;
 	private int quantidade;
 
-	public Contrato(Cliente cliente, Equipamento equipamento, int quantidade, LocalDate dataFim) {
+	public Contrato(int id, Cliente cliente, Equipamento equipamento, int quantidade, LocalDate dataFim) {
+		this.id = id;
 		this.cliente = cliente;
 		this.equipamento = equipamento;
 		this.quantidade = quantidade;
@@ -18,26 +19,53 @@ public class Contrato {
 	}
 
 	private double geraValorTotal() {
-		return this.equipamento.getValor() * this.quantidade * this.dataFim.until(this.dataInicio).getDays();
+		return this.equipamento.getValor() * this.quantidade * this.dataInicio.until(this.dataFim).getDays();
+	}
+	
+	public int getId() {
+		return id;
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
 
+	public Equipamento getEquipamento() {
+		return equipamento;
+	}
+
+	public LocalDate getDataInicio() {
+		return dataInicio;
+	}
+
+	public LocalDate getDataFim() {
+		return dataFim;
+	}
+	
+	public double getValorTotal() {
+		return valorTotal;
+	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+	
 	@Override
 	public String toString() {
 		return "Contrato:" 
-				+ "\nid=" 
+				+ "\nId: " 
 				+ id 
-				+ "\ncliente=" 
 				+ cliente 
-				+ "\nequipamento=" 
 				+ equipamento 
-				+ "\ndataInicio="
+				+ "\nData Inicio: "
 				+ dataInicio 
-				+ "\ndataFim=" 
+				+ "\nData Fim: " 
 				+ dataFim 
-				+ "\nvalorTotal=" 
-				+ valorTotal 
-				+ "\nquantidade=" 
-				+ quantidade;
+				+ "\nValor Total: R$" 
+				+ String.format("%.2f", valorTotal)
+				+ "\nQuantidade: " 
+				+ quantidade
+				+ "\n";
 	}
+	
 }
