@@ -1,3 +1,5 @@
+package Projeto1;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +17,13 @@ public class Controlador {
 	 * @return cliente
 	 */
 	private static Cliente cadastraCliente() {
-		System.out.println("Digite o Nome do Cliente");
+		System.out.print("\nDigite o Nome do Cliente: ");
 
 		String nomeCliente = sc.nextLine();
-		Cliente cliente = new Cliente(clientes.size(), nomeCliente);
+		Cliente cliente = new Cliente(clientes.size()+1, nomeCliente);
 		clientes.add(cliente);
 
-		System.out.println("Registrado como cliente: " + cliente.getNome());
+		System.out.println("Registrado como cliente: " + cliente.getNome() + "\n");
 		return cliente;
 	}
 
@@ -31,16 +33,16 @@ public class Controlador {
 	 * contendo Descrição, Tipo, Valor Diario e quantidade de equipamentos disponiveis.
 	 */
 	private static void cadastraEquipamento() {
-		System.out.println("Digite uma descricao do equipamento: ");
+		System.out.print("\nDigite uma descricao do equipamento: ");
 		String descricao = sc.nextLine();
 
-		System.out.println("Digite o Tipo do Equipamento: ");
+		System.out.print("Digite o Tipo do Equipamento: ");
 		String tipo = sc.nextLine();
 
-		System.out.println("Digite o Valor diario do Equipamento: ");
+		System.out.print("Digite o Valor diario do Equipamento: ");
 		double valor = sc.nextDouble();
 
-		System.out.println("Digite a quantidade do Equipamento disponivel: ");
+		System.out.print("Digite a quantidade do Equipamento disponivel: ");
 		int quantidade = sc.nextInt();
 
 		Equipamento equipamento = new Equipamento(equipamentos.size(), descricao, tipo, valor, quantidade);
@@ -50,11 +52,11 @@ public class Controlador {
 	
 	
 	/**
-	 * Pergunta usuario quer continuar registrando equipamentos.
+	 * Pergunta usuario se quer continuar registrando equipamentos.
 	 * @return Boolean desejo
 	 */
 	private static boolean continuar() {
-		System.out.println("Deseja registrar mais um equipamento? (S ou N)");
+		System.out.println("\nDeseja registrar mais um equipamento? (S/N)");
 		String desejo = sc.nextLine();
 		desejo = sc.nextLine().toUpperCase();
 		return desejo.contains("S");
@@ -69,7 +71,8 @@ public class Controlador {
 	
 		for (Equipamento equipamento : equipamentos) {
 			System.out.println("\nid:" + equipamento.getId() + "\nDescricao: " + equipamento.getDescricao() + "\nTipo: "
-					+ equipamento.getTipo() + "\nValor: " + equipamento.getValor());
+					+ equipamento.getTipo() + "\nValor: R$" + String.format("%.2f", equipamento.getValor()) 
+					+ "\nQuantidade Disponivel: " + equipamento.getQuantidadeDisponivel() + "\n");
 		}
 	}
 	
@@ -81,16 +84,20 @@ public class Controlador {
 	 */
 	private static Contrato cadastraContrato(Cliente cliente) {
 		Equipamento equipamento = validaEquipamento();
-		System.out.println("Quantidade disponivel:  " + equipamento.getQuantidadeDisponivel()
-				+ "\nQuantidade do equipamento desejado:");
+		System.out.print("Quantidade disponivel:  " + equipamento.getQuantidadeDisponivel()
+				+ "\nQuantidade do equipamento desejado: ");
 		int quantidade = sc.nextInt();
 		while (quantidade < 0 || quantidade > equipamento.getQuantidadeDisponivel()) {
-			System.out.println("Numero de quantidade invalidao, digite novamente: ");
+			System.out.print("\nNumero de quantidade invalidao, digite novamente: ");
 			quantidade = sc.nextInt();
 		}
-		System.out.println("Digite o numero de dias para o contrato: ");
+		equipamento.setQuantidadeDisponivel(quantidade);
+		System.out.print("Digite o numero de dias para o contrato: ");
 		int numeroDias = sc.nextInt();
-		return new Contrato(cliente, equipamento, quantidade, LocalDate.now().plusDays(numeroDias));
+		int id = 0;
+		id++;
+		return new Contrato(id, cliente, equipamento, quantidade, LocalDate.now().plusDays(numeroDias));
+		
 	}
 	
 	
@@ -99,11 +106,11 @@ public class Controlador {
 	 * @return
 	 */
 	private static Equipamento validaEquipamento() {
-		System.out.println("Digite o id do objeto desejado:");
+		System.out.print("\nDigite o id do objeto desejado: ");
 		int idEquipamento = sc.nextInt();
-
+		
 		while (idEquipamento < 0 || idEquipamento > equipamentos.size()) {
-			System.out.println("ERRO! Digite o id do objeto desejado novamente");
+			System.out.print("\n\tERRO!\nDigite o id do objeto desejado novamente: ");
 			idEquipamento = sc.nextInt();
 		}
 		return equipamentos.get(idEquipamento);
@@ -115,7 +122,7 @@ public class Controlador {
 		Cliente cliente = null;
 
 		do {
-			System.out.println("\nSelecione uma das opcoes abaixo:");
+			System.out.println("Selecione uma das opcoes abaixo:");
 			System.out.println("1-Cadastrar Cliente\n2-Cadastrar Equipamentos");
 			System.out.println("3-Ver Equipamentos Disponiveis\n4-Cadastrar Contrato");
 			System.out.println("0-Para Sair");
@@ -142,7 +149,7 @@ public class Controlador {
 				break;
 			case 4:
 				Contrato contrato = cadastraContrato(cliente);
-				System.out.println("Contrato criado com sucesso: " + contrato);
+				System.out.println("\nContrato criado com sucesso!\n\n" + contrato);
 				break;
 			case 0:
 				System.out.println("Saindo do programa.");
