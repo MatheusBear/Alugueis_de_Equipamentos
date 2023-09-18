@@ -1,4 +1,4 @@
-package Projeto1;
+//package Codigo;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,8 +8,10 @@ import java.util.Scanner;
 public class Controlador {
 	private static final List<Cliente> clientes = new ArrayList<>();
 	private static final List<Equipamento> equipamentos = new ArrayList<>();
-	private static Scanner sc = new Scanner(System.in);
-
+	private static final List<Contrato> contratos = new ArrayList<>();
+ 	private static Scanner sc = new Scanner(System.in);
+	private static int ContratoContador = 0;
+ 
 	
 	/**
 	 * Cadastra um novo cliente no sistema.
@@ -96,10 +98,47 @@ public class Controlador {
 		int numeroDias = sc.nextInt();
 		int id = 0;
 		id++;
+
 		return new Contrato(id, cliente, equipamento, quantidade, LocalDate.now().plusDays(numeroDias));
 		
 	}
-	
+
+
+	/**
+	 * Metodo para pegar todos os contratos do cliente desejado
+	 * @param Client
+	 */
+	public static void getContratoByCliente(Cliente Client){
+
+		for(int i = 0; i < contratos.size(); i++){
+			if(contratos.get(i).getCliente() == Client){
+				System.out.println(contratos.get(i));
+			}
+		}
+
+		
+	}
+
+	/**
+	 * Fornecer o Relatorio com o faturamento do mes desejado
+	 * @param mes
+	 * @param ano
+	 */
+	public static void getRelatorioDoMes(int mes, int ano){
+
+		double Fatura = 0;
+
+		for(int i = 0; i < contratos.size(); i++){
+			LocalDate dataInicio = (contratos.get(i)).getDataInicio();
+			LocalDate dataFim = (contratos.get(i)).getDataFim();
+			if((dataInicio.getYear() == ano && dataInicio.getMonthValue() == mes) || (dataFim.getYear() == ano && dataFim.getMonthValue() == mes)){
+				System.out.println(contratos.get(i));
+				Fatura += contratos.get(i).getValorTotal();
+			}
+		}
+
+		System.out.println("A Fatura total do mes " + mes + " foi: " + Fatura);
+	}
 	
 	/**
 	 * Valida se o equipamento existe.
@@ -125,6 +164,8 @@ public class Controlador {
 			System.out.println("Selecione uma das opcoes abaixo:");
 			System.out.println("1-Cadastrar Cliente\n2-Cadastrar Equipamentos");
 			System.out.println("3-Ver Equipamentos Disponiveis\n4-Cadastrar Contrato");
+			System.out.println("5-Listar Todos os Clientes\n6-Consultar Alugueis do Cliente");
+			System.out.println("7-Listar Relatorio Mensal");
 			System.out.println("0-Para Sair");
 
 			if (!sc.hasNextInt()) {
@@ -150,6 +191,29 @@ public class Controlador {
 			case 4:
 				Contrato contrato = cadastraContrato(cliente);
 				System.out.println("\nContrato criado com sucesso!\n\n" + contrato);
+				contratos.add(ContratoContador, contrato);
+				ContratoContador++;
+				break;
+			case 5:
+				System.out.println(clientes.toString());
+				break;
+			case 6:
+				System.out.println("Digite o ID do cliente desejado: ");
+				resp = sc.nextInt();
+				resp-= 1;
+				sc.nextLine();
+				getContratoByCliente(clientes.get(resp));
+				break;
+			case 7:
+				System.out.println("Digite o numero do mes desejado (Janeiro - 1, Fevereiro - 2, Março - 3 e etc): ");
+				int mes = sc.nextInt();
+				sc.nextLine();
+				System.out.println("Digite o ano desejado: ");
+				int ano = sc.nextInt();
+				sc.nextLine();
+
+				getRelatorioDoMes(mes, ano);
+
 				break;
 			case 0:
 				System.out.println("Saindo do programa.");
