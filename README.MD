@@ -1,12 +1,7 @@
 # Controle de Aluguéis de Equipamentos
-
-
-## Descrição
-
 Este é um sistema de locação de equipamentos desenvolvido em Java que permite a gestão de clientes, equipamentos e contratos de locação. O sistema foi projetado para atender às necessidades de empresas que alugam equipamentos para clientes, ajudando a controlar as locações, calcular o valor total de contratos e gerar relatórios mensais de faturamento.
 
 ## :hammer: Recursos Principais
-
 - `Registrar novos Equipamentos:` Registra e armazena os dados dos equipamentos.
 - `Registrar novos Clientes:` Registra e armazena os dados dos clientes.
 - `Relatório de Equipamentos:` Exibe todos os equipamentos disponiveis no sistema.
@@ -24,9 +19,6 @@ Este é um sistema de locação de equipamentos desenvolvido em Java que permite
 
 ## Pré-requisitos
 - Java Development Kit (JDK) instalado.
-
-##
-
 
 ## Participantes
 
