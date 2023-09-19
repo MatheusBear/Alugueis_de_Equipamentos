@@ -3,15 +3,18 @@
 
 ## Descrição
 
-- Este é um projeto de um sistema de gerenciamento de aluguéis de equipamentos para construção civil.
+- Este é um sistema de gerenciamento de aluguéis de equipamentos para construção civil.
 
 ## :hammer: Funcionalidades do projeto
 
-- `Funcionalidade 1` `Registrar novos Alugueis`: Registra novos aluguéis, incluindo todas as informações necessárias.
-- `Funcionalidade 2` `Calcular valor do Aluguel`: Calcula e mostra o valor total do aluguel para cada registro.
-- `Funcionalidade 3` `Registros de Alugueis`: Armazena um registro dos aluguéis passados, incluindo as informações registradas.
-- `Funcionalidade 4` `Consulta de Alugueis`: Permite a consulta rápida dos aluguéis atuais e passados de um cliente específico.
-- `Funcionalidade 5` `Relatório Mensal`: Fornece um relatório mensal que lista todos os aluguéis do mês, incluindo o faturamento total.
+- `Funcionalidade 1` `Registrar novos Equipamentos`: Registra e armazena os dados dos equipamentos.
+- `Funcionalidade 2` `Registrar novos Clientes`: Registra e armazena os dados dos clientes.
+- `Funcionalidade 3` `Relatório de Equipamentos `: Exibe todos os equipamentos disponiveis no sistema.
+- `Funcionalidade 4` `Registrar novos Alugueis`: Registra novos aluguéis, incluindo todas as informações necessárias.
+- `Funcionalidade 5` `Calcular valor do Aluguel`: Calcula e mostra o valor total do aluguel para cada registro.
+- `Funcionalidade 6` `Registros de Alugueis`: Armazena um registro dos aluguéis passados.
+- `Funcionalidade 7` `Consulta de Alugueis`: Consulta rápida dos aluguéis atuais e passados de um cliente pelo seu Id.
+- `Funcionalidade 8` `Relatório Mensal`: Fornece um relatório mensal que lista todos os aluguéis do mês, incluindo o faturamento do mês.
 
 ## Participantes
 
