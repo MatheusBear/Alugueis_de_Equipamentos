@@ -1,25 +1,39 @@
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 
 public class Contrato {
 	private int id;
 	private Cliente cliente;
 	private Equipamento equipamento;
-	private LocalDate dataInicio = LocalDate.now();
-	private LocalDate dataFim;
+	private String dataInicio;
+	private String dataFim;
 	private double valorTotal;
 	private int quantidade;
-
-	public Contrato(int id, Cliente cliente, Equipamento equipamento, int quantidade, LocalDate dataFim) {
+	
+	
+	public Contrato(int id, Cliente cliente, Equipamento equipamento, int quantidade, String dataFim, String StartDate) {
 		this.id = id;
 		this.cliente = cliente;
 		this.equipamento = equipamento;
 		this.quantidade = quantidade;
 		this.dataFim = dataFim;
+		this.dataInicio = StartDate;
 		this.valorTotal = this.geraValorTotal();
 	}
 
 	private double geraValorTotal() {
-		return this.equipamento.getValor() * this.quantidade * this.dataInicio.until(this.dataFim).getDays();
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate startDate = LocalDate.parse(this.dataInicio, dateFormatter);
+		LocalDate endDate = LocalDate.parse(this.dataFim, dateFormatter);
+		return this.equipamento.getValor() * this.quantidade * startDate.until(endDate).getDays();
+	}
+	
+	private int diasAlugados() {
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate startDate = LocalDate.parse(this.dataInicio, dateFormatter);
+		LocalDate endDate = LocalDate.parse(this.dataFim, dateFormatter);
+		return startDate.until(endDate).getDays();
 	}
 	
 	public int getId() {
@@ -34,11 +48,11 @@ public class Contrato {
 		return equipamento;
 	}
 
-	public LocalDate getDataInicio() {
+	public String getDataInicio() {
 		return dataInicio;
 	}
 
-	public LocalDate getDataFim() {
+	public String getDataFim() {
 		return dataFim;
 	}
 	
@@ -58,14 +72,22 @@ public class Contrato {
 				+ cliente 
 				+ equipamento 
 				+ "\nData Inicio: "
-				+ dataInicio 
+				+ dataInicio
 				+ "\nData Fim: " 
-				+ dataFim 
+				+ dataFim
+				+"\nDias Alugados: "
+				+ diasAlugados()
 				+ "\nValor Total: R$" 
 				+ String.format("%.2f", valorTotal)
 				+ "\nQuantidade: " 
 				+ quantidade
 				+ "\n";
 	}
+
+	public void get(Cliente cliente) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }
