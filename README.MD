@@ -17,7 +17,7 @@
 - `Funcionalidade 8` `Relatório Mensal`: Fornece um relatório mensal que lista todos os aluguéis do mês, incluindo o faturamento do mês.
 
 ## Como Usar
-- Inicialize o programa executando a classe Controlador.
+- `1-` Inicialize o programa executando a classe Controlador.
 - Selecione as opções disponíveis no menu para cadastrar clientes, equipamentos, visualizar equipamentos disponíveis, cadastrar contratos, verificar contratos de um cliente ou emitir relatórios mensais.
 - Siga as instruções fornecidas pelo programa para cada operação.
 - O sistema oferece validações para garantir que as informações inseridas sejam corretas e coerentes.
