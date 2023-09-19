@@ -3,7 +3,7 @@
 
 ## Descrição
 
-- Este é um sistema de gerenciamento de aluguéis de equipamentos para construção civil.
+- Este é um sistema de locação de equipamentos desenvolvido em Java que permite a gestão de clientes, equipamentos e contratos de locação. O sistema foi projetado para atender às necessidades de empresas que alugam equipamentos para clientes, ajudando a controlar as locações, calcular o valor total de contratos e gerar relatórios mensais de faturamento.
 
 ## :hammer: Funcionalidades do projeto
 
@@ -15,6 +15,12 @@
 - `Funcionalidade 6` `Registros de Alugueis`: Armazena um registro dos aluguéis passados.
 - `Funcionalidade 7` `Consulta de Alugueis`: Consulta rápida dos aluguéis atuais e passados de um cliente pelo seu Id.
 - `Funcionalidade 8` `Relatório Mensal`: Fornece um relatório mensal que lista todos os aluguéis do mês, incluindo o faturamento do mês.
+
+## Como Usar
+- Inicialize o programa executando a classe Controlador.
+- Selecione as opções disponíveis no menu para cadastrar clientes, equipamentos, visualizar equipamentos disponíveis, cadastrar contratos, verificar contratos de um cliente ou emitir relatórios mensais.
+- Siga as instruções fornecidas pelo programa para cada operação.
+- O sistema oferece validações para garantir que as informações inseridas sejam corretas e coerentes.
 
 ## Participantes
 
