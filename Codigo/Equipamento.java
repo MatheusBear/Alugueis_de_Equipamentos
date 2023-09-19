@@ -4,7 +4,7 @@ public class Equipamento {
 	private String tipo;
 	private Double valor;
 	private int quantidadeDisponivel;
-	
+
 	public Equipamento(int id, String descricao, String tipo, Double valor, int quantidadeDisponivel) {
 		this.id = id;
 		this.descricao = descricao;
@@ -32,24 +32,24 @@ public class Equipamento {
 	public int getQuantidadeDisponivel() {
 		return quantidadeDisponivel;
 	}
-	
-	public void setQuantidadeDisponivel(int alugados) {
+
+	private void setQuantidadeDisponivel(int alugados) {
 		this.quantidadeDisponivel -= alugados;
 	}
-	
+
+	public boolean validaQuantidaDisponivel(int alugados) {
+		boolean verify = ((this.quantidadeDisponivel - alugados) >= 0) ? true : false;
+		if(verify) {
+			setQuantidadeDisponivel( alugados);
+		}
+		return verify;
+
+	}
 
 	@Override
 	public String toString() {
-		
-		return "\nEquipamento:" 
-				+ "\nid: " 
-				+ id 
-				+ "\nDescricao: " 
-				+ descricao
-				+ "\nTipo: " 
-				+ tipo 
-				+ "\nValor: R$"
-				+ String.format("2.%f", valor)
-				+ "\n";
+
+		return "\nEquipamento:" + "\nid: " + id + "\nDescricao: " + descricao + "\nTipo: " + tipo + "\nValor: R$"
+				+ String.format("%.2f", valor) + "\n";
 	}
 }
