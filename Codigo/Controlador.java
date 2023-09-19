@@ -1,40 +1,44 @@
-//package Codigo;
+package Projeto1;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Controlador {
-	private static final List<Cliente> clientes = new ArrayList<>();
-	private static final List<Equipamento> equipamentos = new ArrayList<>();
-	private static final List<Contrato> contratos = new ArrayList<>();
- 	private static Scanner sc = new Scanner(System.in);
-	private static int ContratoContador = 0;
- 
+	public static final List<Cliente> clientes = new ArrayList<>();
+	public static final List<Equipamento> equipamentos = new ArrayList<>();
+	public static final List<Contrato> contratos = new ArrayList<>();
+	public static Scanner sc = new Scanner(System.in);
 	
+	public static DateTimeFormatter formatter() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		return formatter;
+	}
+	
+
 	/**
-	 * Cadastra um novo cliente no sistema.
-	 * Clientes ficam apenas com o nome salvo.
+	 * Cadastra um novo cliente no sistema. Clientes ficam apenas com o nome salvo.
+	 * 
 	 * @return cliente
 	 */
-	private static Cliente cadastraCliente() {
+	public static Cliente cadastraCliente() {
 		System.out.print("\nDigite o Nome do Cliente: ");
 
 		String nomeCliente = sc.nextLine();
-		Cliente cliente = new Cliente(clientes.size()+1, nomeCliente);
+		Cliente cliente = new Cliente(clientes.size() + 1, nomeCliente);
 		clientes.add(cliente);
 
 		System.out.println("Registrado como cliente: " + cliente.getNome() + "\n");
 		return cliente;
 	}
 
-
 	/**
-	 * Cadastra um novo equipamento no sistema,
-	 * contendo Descrição, Tipo, Valor Diario e quantidade de equipamentos disponiveis.
+	 * Cadastra um novo equipamento no sistema, contendo Descrição, Tipo, Valor
+	 * Diario e quantidade de equipamentos disponiveis.
 	 */
-	private static void cadastraEquipamento() {
+	public static void cadastraEquipamento() {
 		System.out.print("\nDigite uma descricao do equipamento: ");
 		String descricao = sc.nextLine();
 
@@ -47,125 +51,236 @@ public class Controlador {
 		System.out.print("Digite a quantidade do Equipamento disponivel: ");
 		int quantidade = sc.nextInt();
 
-		Equipamento equipamento = new Equipamento(equipamentos.size(), descricao, tipo, valor, quantidade);
+		Equipamento equipamento = new Equipamento(equipamentos.size() + 1, descricao, tipo, valor, quantidade);
 
 		equipamentos.add(equipamento);
 	}
-	
-	
+
 	/**
 	 * Pergunta usuario se quer continuar registrando equipamentos.
+	 * 
 	 * @return Boolean desejo
 	 */
-	private static boolean continuar() {
+	public static boolean continuar() {
 		System.out.println("\nDeseja registrar mais um equipamento? (S/N)");
 		String desejo = sc.nextLine();
 		desejo = sc.nextLine().toUpperCase();
 		return desejo.contains("S");
 	}
-	
-	
+
 	/**
-	 * Mostra todos os equipamentos disponiveis, juntamente com seu Id, Descrição, Tipo e Valor diario
+	 * Mostra todos os equipamentos disponiveis, juntamente com seu Id, Descrição,
+	 * Tipo e Valor diario
 	 */
-	private static void verEquipamentosDisponiveis() {
+	public static void verEquipamentosDisponiveis() {
 		System.out.println("\nEquipamentos disponiveis: ");
-	
+
 		for (Equipamento equipamento : equipamentos) {
 			System.out.println("\nid:" + equipamento.getId() + "\nDescricao: " + equipamento.getDescricao() + "\nTipo: "
-					+ equipamento.getTipo() + "\nValor: R$" + String.format("%.2f", equipamento.getValor()) 
+					+ equipamento.getTipo() + "\nValor: R$" + String.format("%.2f", equipamento.getValor())
 					+ "\nQuantidade Disponivel: " + equipamento.getQuantidadeDisponivel() + "\n");
 		}
 	}
+
+	public static   Object verificaExistencia() {
+		return (clientes.size() == 0 && equipamentos.size() == 0)?naoExiste():cadastraContrato();
+	}
 	
+	public static Object naoExiste() {
+		System.out.println("\nAntes de cadastrar um contrato deve-se cadastrar pelo menos um cliente e um Equipamento");
+		return null;
+	}
 	
 	/**
-	 * Cadastra um contrato no Sistema, contendo 
+	 * Cadastra um contrato no Sistema, contendo
+	 * 
 	 * @param cliente
-	 * @return
 	 */
-	private static Contrato cadastraContrato(Cliente cliente) {
+	public static Object cadastraContrato() {
+		Cliente cliente = clienteExiste();
 		Equipamento equipamento = validaEquipamento();
-		System.out.print("Quantidade disponivel:  " + equipamento.getQuantidadeDisponivel()
-				+ "\nQuantidade do equipamento desejado: ");
-		int quantidade = sc.nextInt();
-		while (quantidade < 0 || quantidade > equipamento.getQuantidadeDisponivel()) {
-			System.out.print("\nNumero de quantidade invalidao, digite novamente: ");
-			quantidade = sc.nextInt();
-		}
-		equipamento.setQuantidadeDisponivel(quantidade);
-		System.out.print("Digite o numero de dias para o contrato: ");
-		int numeroDias = sc.nextInt();
 		int id = 0;
 		id++;
 
-		return new Contrato(id, cliente, equipamento, quantidade, LocalDate.now().plusDays(numeroDias));
-		
-	}
+		System.out.println("Quantidade disponivel:  " + equipamento.getQuantidadeDisponivel());
+		System.out.print("\nQuantidade do equipamento desejado: ");
+		int quantidade = sc.nextInt();
+		while (!equipamento.validaQuantidaDisponivel(quantidade)) {
+			System.out.print("\nNumero de quantidade invalidao, digite novamente: ");
+			quantidade = sc.nextInt();
+		}
+		LocalDate dataInicio = validaDataInicio();
+		LocalDate dataFim = validaDataFim(dataInicio);
 
+		String dataInicioFormatada = formatoData(dataInicio);
+		String dataFimFormatada = formatoData(dataFim);
+
+		Contrato contrato = new Contrato(id, cliente, equipamento, quantidade, dataFimFormatada, dataInicioFormatada);
+		contratos.add(contrato);
+		System.out.println("\nContrato criado com sucesso!\n\n" + contrato);
+		return false;
+
+	}
 
 	/**
-	 * Metodo para pegar todos os contratos do cliente desejado
-	 * @param Client
+	 * Formata a data recebida para o formato (DD/MM/AAAA)
+	 * 
+	 * @param data : LocalDate
+	 * @return retorna a data formatada
 	 */
-	public static void getContratoByCliente(Cliente Client){
-
-		for(int i = 0; i < contratos.size(); i++){
-			if(contratos.get(i).getCliente() == Client){
-				System.out.println(contratos.get(i));
-			}
-		}
-
-		
+	public static String formatoData(LocalDate data) {
+		DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyy");
+		return data.format(formato);
 	}
 
-	/**
-	 * Fornecer o Relatorio com o faturamento do mes desejado
-	 * @param mes
-	 * @param ano
-	 */
-	public static void getRelatorioDoMes(int mes, int ano){
-
-		double Fatura = 0;
-
-		for(int i = 0; i < contratos.size(); i++){
-			LocalDate dataInicio = (contratos.get(i)).getDataInicio();
-			LocalDate dataFim = (contratos.get(i)).getDataFim();
-			if((dataInicio.getYear() == ano && dataInicio.getMonthValue() == mes) || (dataFim.getYear() == ano && dataFim.getMonthValue() == mes)){
-				System.out.println(contratos.get(i));
-				Fatura += contratos.get(i).getValorTotal();
-			}
-		}
-
-		System.out.println("A Fatura total do mes " + mes + " foi: " + Fatura);
-	}
-	
 	/**
 	 * Valida se o equipamento existe.
+	 * 
 	 * @return
 	 */
-	private static Equipamento validaEquipamento() {
+	public static Equipamento validaEquipamento() {
 		System.out.print("\nDigite o id do objeto desejado: ");
 		int idEquipamento = sc.nextInt();
-		
-		while (idEquipamento < 0 || idEquipamento > equipamentos.size()) {
+
+		while (idEquipamento < 0 || idEquipamento > equipamentos.size() + 1) {
 			System.out.print("\n\tERRO!\nDigite o id do objeto desejado novamente: ");
 			idEquipamento = sc.nextInt();
 		}
-		return equipamentos.get(idEquipamento);
+		return equipamentos.get(idEquipamento - 1);
 	}
 
+	/**
+	 * Verifica se o id fornecido para cadastrar no contrato pertence a um cliente
+	 * cadastrado no sistema
+	 * 
+	 * @return
+	 */
+	public static Cliente clienteExiste() {
+		System.out.print("\nDigite o id do Cliente responsavel: ");
+		int clienteId = sc.nextInt();
+		for (Cliente cliente : clientes) {
+			while (cliente.getId() != clienteId) {
+				System.out.print("\n\tCliente Nao encontrado!\n\n");
+				System.out.print("\nDigite o id do cliente responsavel novamente: ");
+				clienteId = sc.nextInt();
+			}
+		}
+		return clientes.get(clienteId - 1);
+	}
 
+	/**
+	 * Valida se a data digitada está no formato correto
+	 * 
+	 * @return
+	 */
+	public static LocalDate validaDataInicio() {
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		boolean validDate = false;
+		LocalDate dataInicio;
+		do {
+			System.out.print("Digite a data de inicio do contrato (DD/MM/AAAA):  ");
+			if (!sc.hasNextInt()) {
+				sc.nextLine();
+			}
+			String data = sc.nextLine();
+			try {
+				dataInicio = LocalDate.parse(data, dateFormatter);
+			} catch (java.time.format.DateTimeParseException e) {
+				System.out.println("Formato de data inválido. Certifique-se de usar (dd/MM/yyyy)");
+				validDate = true;
+				dataInicio = null;
+			}
+		} while (validDate);
+		return dataInicio;
+	}
+
+	/**
+	 * Assegura que a data de termino do contrato é valida, além de assegurar que o
+	 * contrato não tenha dias negativos
+	 * 
+	 * @param dataInicio
+	 * @return
+	 */
+	public static LocalDate validaDataFim(LocalDate dataInicio) {
+		DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		boolean validDate = false;
+		LocalDate dataFim = null;
+		do {
+			System.out.print("Digite a data de termino do contrato (DD/MM/AAAA):  ");
+
+			String data = sc.nextLine();
+			try {
+				dataFim = LocalDate.parse(data, dateFormatter);
+				validDate = (!dataInicio.isBefore(dataFim)) ? true : false;
+				if (validDate)
+					System.out.println("O contrato nao pode ter dias negativos! ");
+
+			} catch (java.time.format.DateTimeParseException e) {
+				System.out.println("Formato de data inválido. Certifique-se de usar (dd/MM/yyyy)");
+				validDate = true;
+			}
+		} while (validDate);
+		return dataFim;
+	}
+
+	public static void verContratosDoCliente() {
+		System.out.println("Digite o Id do cliente: ");
+		int id = sc.nextInt();
+		double somatoriaContratos = 0.00;
+		
+		for(Contrato contrato : contratos) {
+			 if (contrato.getCliente().getId() == id) {
+				 System.out.println("\n" + contrato.toString());
+		            String status = (verificaStatusDoContrato(contrato.getDataFim()))?"Ativo":"Finalizado";
+		            System.out.println("Status: " + status);
+		            somatoriaContratos += contrato.getValorTotal();
+		        }
+		}
+		System.out.println("Montante total: R$" + String.format("%.2f", somatoriaContratos) + "\n");
+	}
+	
+	/**
+	 * Verifica se o contrato está ativo, 
+	 * recebe uma string com a Data de termino do contrato no formato ("dd/MM/yyyy"), 
+	 * e retorna  verdadeiro para contratos ativos e falso para contratos não ativos.
+	 * @param data
+	 * @return verifyStatus
+	 */
+	public static boolean verificaStatusDoContrato(String data) {
+		 LocalDate dataFinal = LocalDate.parse(data, formatter());
+		 boolean verifyStatus = dataFinal.isAfter(LocalDate.now());
+		 return verifyStatus;
+	}
+	
+	public static void emiteRelatorioMensal() {
+		System.out.println("Digite o mes que deseja emitir o relatorio: ");
+		int mesDesejado = sc.nextInt();
+		boolean existe = false;
+		double somatoriaContratos = 0.00;
+		for (Contrato contrato : contratos) {
+            String data = contrato.getDataInicio();
+            LocalDate dataContrato = LocalDate.parse(data, formatter());
+            int mesContrato = dataContrato.getMonthValue();
+            if (mesContrato == mesDesejado) {
+            	existe=true;
+            	System.out.println("\n" + contrato.toString());
+	            String status = (verificaStatusDoContrato(contrato.getDataFim()))?"Ativo":"Finalizado";
+	            System.out.println("Status: " + status);
+	            somatoriaContratos += contrato.getValorTotal();
+            }
+        }
+		String existeRelatorio = (existe)?"Faturamento Mensal: R$" + String.format("%.2f", somatoriaContratos) :"Nao existem contratos no mes";
+		System.out.println("\n" + existeRelatorio + "\n");
+	}
+	
 	public static void main(String[] args) {
 		int resp;
-		Cliente cliente = null;
 
 		do {
 			System.out.println("Selecione uma das opcoes abaixo:");
 			System.out.println("1-Cadastrar Cliente\n2-Cadastrar Equipamentos");
 			System.out.println("3-Ver Equipamentos Disponiveis\n4-Cadastrar Contrato");
-			System.out.println("5-Listar Todos os Clientes\n6-Consultar Alugueis do Cliente");
-			System.out.println("7-Listar Relatorio Mensal");
+			System.out.println("5-Buscar Contratos de um Cliente\n6-Emitir relatorio Mensal");
 			System.out.println("0-Para Sair");
 
 			if (!sc.hasNextInt()) {
@@ -176,8 +291,11 @@ public class Controlador {
 			sc.nextLine();
 
 			switch (resp) {
+			case 0:
+				System.out.println("Saindo do programa.");
+				break;
 			case 1:
-				cliente = cadastraCliente();
+				cadastraCliente();
 				break;
 			case 2:
 				cadastraEquipamento();
@@ -189,40 +307,23 @@ public class Controlador {
 				verEquipamentosDisponiveis();
 				break;
 			case 4:
-				Contrato contrato = cadastraContrato(cliente);
-				System.out.println("\nContrato criado com sucesso!\n\n" + contrato);
-				contratos.add(ContratoContador, contrato);
-				ContratoContador++;
+				verificaExistencia();
 				break;
 			case 5:
-				System.out.println(clientes.toString());
+				verContratosDoCliente();
 				break;
 			case 6:
-				System.out.println("Digite o ID do cliente desejado: ");
-				resp = sc.nextInt();
-				resp-= 1;
-				sc.nextLine();
-				getContratoByCliente(clientes.get(resp));
-				break;
-			case 7:
-				System.out.println("Digite o numero do mes desejado (Janeiro - 1, Fevereiro - 2, Março - 3 e etc): ");
-				int mes = sc.nextInt();
-				sc.nextLine();
-				System.out.println("Digite o ano desejado: ");
-				int ano = sc.nextInt();
-				sc.nextLine();
-
-				getRelatorioDoMes(mes, ano);
-
-				break;
-			case 0:
-				System.out.println("Saindo do programa.");
+				emiteRelatorioMensal();
 				break;
 			default:
 				System.out.println("\nOpcao invalida!\n");
 			}
 		} while (resp != 0);
 
-		sc.close(); 
+		sc.close();
 	}
+
+
+
+
 }
